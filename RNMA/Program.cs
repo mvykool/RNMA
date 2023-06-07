@@ -1,3 +1,5 @@
+using RNMA.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +18,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//endpoints
+app.MapGet("/get-all-posts", async () => await PostRepository.GetPostsAsync());
 
 app.Run();
 
