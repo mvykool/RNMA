@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [post, setPost] = useState([]);
+
+  function getPost(){
+    const url = "https://localhost:7265/get-all-posts";
+
+    fetch(url, {
+      method: "GET",
+    })
+    .then((res:any) => res.json())
+    .then((postFromServer : any) => {
+      console.log(postFromServer);
+      setPost(postFromServer)
+    })
+    .catch((err:any) => console.log(err));
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count isa {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>
+        client
+      </h1>
+
+    <div>
+      <button onClick={getPost}>get posts</button>
+      <button>create new post</button>
+    </div>
+
+      <table className="table">
+        <thead className="col">
+          <tr>post id</tr>
+          <tr>title</tr>
+          <tr>content</tr>
+          <tr>crud operation</tr>
+        </thead>
+        <tbody >
+          <tr>
+            <th>1</th>
+            <td>title</td>
+            <td>content</td>
+            <td>
+              <button type="button">update</button>
+              <button type="button">delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   )
 }
 
 export default App
+
