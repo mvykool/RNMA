@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace RNMA.Data
 {
@@ -28,9 +29,9 @@ namespace RNMA.Data
                 {
                     await db.Posts.AddAsync(postToCreate);
 
-                    return await db.SaveChangesAsync() > 1;
+                    return await db.SaveChangesAsync() >= 1;
                 }
-                catch(Exception e) 
+                catch (Exception e)
                 {
                     return false;
                 }
@@ -45,7 +46,7 @@ namespace RNMA.Data
                 {
                     db.Posts.Update(postToUpdate);
 
-                    return await db.SaveChangesAsync() > 1;
+                    return await db.SaveChangesAsync() >= 1;
                 }
                 catch (Exception e)
                 {
@@ -64,7 +65,7 @@ namespace RNMA.Data
 
                     db.Remove(postToDelete);
 
-                    return await db.SaveChangesAsync() > 1;
+                    return await db.SaveChangesAsync() >= 1;
                 }
                 catch (Exception e)
                 {
