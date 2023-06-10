@@ -2,6 +2,19 @@ using RNMA.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSpolicy", builder =>
+    {
+        builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithOrigins("http://localhost:3000", "https://appname.azurestaticapps.net");
+    });
+});
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -17,6 +30,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//set CORS
+app.UseCors("CORSpolicy");
+
 
 //endpoints
 app.MapGet("/get-all-posts", async () => await PostRepository.GetPostsAsync());
